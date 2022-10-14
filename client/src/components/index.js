@@ -5,6 +5,8 @@ import ListSelector from './ListSelector'
 import SongCard from './SongCard'
 import Statusbar from './Statusbar'
 import PlaylistCards from './PlaylistCards'
+import DeleteModal from './DeleteModal'
+import DeleteSongModal from './DeleteSongModal'
 /*
     This serves as a module so that we can import
     all the other components as we wish.
@@ -12,7 +14,9 @@ import PlaylistCards from './PlaylistCards'
     @author McKilla Gorilla
 */
 export {    Banner, 
-            EditToolbar, 
+            EditToolbar,
+            DeleteModal, 
+            DeleteSongModal,
             ListCard, 
             ListSelector, 
             SongCard,
