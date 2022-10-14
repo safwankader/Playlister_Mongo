@@ -106,6 +106,27 @@ export const useGlobalStore = () => {
                 return store;
         }
     }
+    store.addSong = function() {
+        let id = store.currentList._id;
+        async function asyncAddSong(id) {
+            const response = await api.getPlaylistById(id);
+            
+            if(response.data.success){
+                let playlist = response.data.playlist;
+                let newPlaylist = JSON.parse(JSON.stringify(playlist));
+                newPlaylist.songs.push({
+                    title: "Untitled",
+                    artist: "Unknown",
+                    youTubeId: "dQw4w9WgXcQ"
+                });
+                const addedSong = await api.updatePlaylistById(id,newPlaylist);
+                if (addedSong.data.success){
+                    store.updateCurrentList();
+                    }
+                }
+            }
+            asyncAddSong(id);
+        }
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = function() {
@@ -222,6 +243,23 @@ export const useGlobalStore = () => {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    store.updateCurrentList = function() {
+        async function asyncUpdateCurrentList() {
+            let response = await api.getPlaylistById(store.currentList._id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+
+                if (response.data.success) {
+                    storeReducer({
+                        type: GlobalStoreActionType.SET_CURRENT_LIST,
+                        payload: playlist
+                    });
+                }
+            }
+        }
+        asyncUpdateCurrentList();
     }
 
     // THIS GIVES OUR STORE AND ITS REDUCER TO ANY COMPONENT THAT NEEDS IT
