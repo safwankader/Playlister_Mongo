@@ -175,6 +175,42 @@ export const useGlobalStore = () => {
             asyncAddSong(id);
         }
 
+    // THIS FUNCTION MOVES THE SONGS
+
+    store.moveSong = function(start,end) {
+        async function asyncMoveSong(start,end){
+            let response = await api.getPlaylistById(store.currentList._id);
+            if(response.data.success){
+                let list = response.data.playlist;
+
+                if (start < end) {
+                    let temp = list.songs[start];
+                    for (let i = start; i < end; i++) {
+                        list.songs[i] = list.songs[i + 1];
+                    }
+                    list.songs[end] = temp;
+                }
+                else if (start > end) {
+                    let temp = list.songs[start];
+                    for (let i = start; i > end; i--) {
+                        list.songs[i] = list.songs[i - 1];
+                    }
+                    list.songs[end] = temp;
+                }
+
+                const updatedList = await api.updatePlaylistById(store.currentList._id,list);
+                if (updatedList.data.success){
+                    store.updateCurrentList();
+                }
+            }
+    
+        }
+        asyncMoveSong(start,end);
+      
+
+
+    }
+
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = function() {
         async function asyncCreateNewList(){
@@ -187,7 +223,7 @@ export const useGlobalStore = () => {
                         payload: newPlaylist
                     });
                     store.history.push("/playlist" + newPlaylist._id);
-                    store.updateCurrentList();
+                    // store.setNewList(newPlaylist._id);
                 }
             }
         }
@@ -338,9 +374,7 @@ export const useGlobalStore = () => {
             let response = await api.getPlaylistById(store.currentList._id)
             if(response.data.success){
                 let playlist = response.data.playlist;
-                console.log(playlist)
                 let newSongs = playlist.songs.filter(song => song._id !== store.deleteSongId)
-                console.log(newSongs)
                 playlist.songs = newSongs
                 response = await api.updatePlaylistById(store.currentList._id,playlist)
                 if(response.data.success){
@@ -386,6 +420,7 @@ export const useGlobalStore = () => {
         }
         asyncSetCurrentList(id);
     }
+
 
 
 

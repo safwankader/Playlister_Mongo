@@ -9,12 +9,49 @@ function SongCard(props) {
     function handleDeleteSong(event){
         store.markSongForDeletion(index);
     }
+
+    function handleDragStart(event) {
+        event.dataTransfer.setData("song", event.target.id);
+        cardClass = "list-card selected-list-card";
+    }
+    function handleDragOver(event) {
+        event.preventDefault();
+    }
+    function handleDragEnter(event){
+        event.preventDefault();
+    }
+    function handleDragLeave(event) {
+        event.preventDefault();
+    }
+    function handleDrop(event) {
+        event.preventDefault();
+        let target = event.target;
+        let targetId = event.target.id;
+        targetId = targetId.substring(target.id.indexOf("-") + 1);
+        let sourceId = event.dataTransfer.getData("song");
+        sourceId = sourceId.substring(sourceId.indexOf("-") + 1);
+        store.moveSong(parseInt(sourceId.substring(0,1)),parseInt(targetId.substring(0,1)));
+        
+
+        // // ASK THE MODEL TO MOVE THE DATA
+        // this.props.moveCallback(sourceId, targetId);
+    }
+
+
+
+
     let cardClass = "list-card unselected-list-card";
     return (
         <div
             key={index}
             id={'song-' + index + '-card'}
             className={cardClass}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            draggable="true"
         >
             {index + 1}.
             <a
