@@ -212,7 +212,8 @@ export const useGlobalStore = () => {
     }
 
     store.addEditSongTransaction = function (index,title,artist,link) {
-
+        let transaction = new EditSong_Transaction(store,index, title, artist, link);
+        tps.addTransaction(transaction);
     }
 
 
@@ -361,6 +362,7 @@ export const useGlobalStore = () => {
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
         });
+        tps.clearAllTransactions();
     }
 
 
@@ -535,7 +537,7 @@ export const useGlobalStore = () => {
 }
 
     store.editMarkedSong = function (title, artist, link) {
-        store.editSong(store.songEditIndex, title, artist, link);
+        store.addEditSongTransaction(store.songEditIndex, title, artist, link);
         store.hideEditSongModal();
     }
 
@@ -573,6 +575,7 @@ export const useGlobalStore = () => {
                         payload: playlist
                     });
                     store.history.push("/playlist/" + playlist._id);
+                    tps.clearAllTransactions();
                 }
             }
         }

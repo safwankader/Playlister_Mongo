@@ -9,22 +9,23 @@ import jsTPS_Transaction from "../common/jsTPS.js"
  * @author safwankader
  */
 export default class AddSong_Transaction extends jsTPS_Transaction {
-    constructor(initStore) {
+    constructor(initStore, songIndex, newTitle, newArtist, newLink) {
         super();
         this.store = initStore;
+        this.index = songIndex;
+        this.title = newTitle;
+        this.artist = newArtist;
+        this.link = newLink;
+        this.oldSong = JSON.parse(JSON.stringify(initStore.currentList.songs[songIndex]));
 
     }
 
     doTransaction() {
-        this.store.addSong();
+        this.store.editSong(this.index,this.title,this.artist,this.link);
     }
     
     undoTransaction() {
-        let newSongs = this.store.currentList.songs;
-        let deleteSong = newSongs.pop();
-        this.store.deleteSongId = deleteSong._id;
-        this.store.deletSongName = deleteSong.name;
-        this.store.deleteSong();
+        this.store.editSong(this.index,this.oldSong.title,this.oldSong.artist,this.oldSong.youTubeId);
 
     }
 }
