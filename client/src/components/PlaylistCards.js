@@ -13,7 +13,10 @@ import EditSongModal from './EditSongModal'
 function PlaylistCards() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
-
+    if(store.currentList === null){
+        store.history.push("/");
+        return null;
+    }
     return (
         <div id="playlist-cards">
         {

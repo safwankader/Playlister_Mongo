@@ -34,7 +34,7 @@ function SongCard(props) {
         targetId = targetId.substring(target.id.indexOf("-") + 1);
         let sourceId = event.dataTransfer.getData("song");
         sourceId = sourceId.substring(sourceId.indexOf("-") + 1);
-        store.moveSong(parseInt(sourceId.substring(0,1)),parseInt(targetId.substring(0,1)));
+        store.addMoveSongTransaction(parseInt(sourceId.substring(0,1)),parseInt(targetId.substring(0,1)));
         
 
         // // ASK THE MODEL TO MOVE THE DATA

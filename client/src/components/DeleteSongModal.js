@@ -5,7 +5,7 @@ function DeleteSongModal() {
     const { store } = useContext(GlobalStoreContext);
     let name = store.deleteSongName;
     function handleDeleteSong(event) {
-        store.deleteMarkedSong();
+        store.addDeleteSongTransaction();
     }
     function handleCloseModal(event) {
         store.hideDeleteSongModal();
