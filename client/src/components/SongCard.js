@@ -10,6 +10,10 @@ function SongCard(props) {
         store.markSongForDeletion(index);
     }
 
+    function handleEditSong(event) {
+        store.markSongToEdit(index);
+    }
+
     function handleDragStart(event) {
         event.dataTransfer.setData("song", event.target.id);
         cardClass = "list-card selected-list-card";
@@ -51,6 +55,7 @@ function SongCard(props) {
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
+            onDoubleClick={handleEditSong}
             draggable="true"
         >
             {index + 1}.
