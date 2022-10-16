@@ -22,7 +22,7 @@ export default class AddSong_Transaction extends jsTPS_Transaction {
     undoTransaction() {
         let newSongs = JSON.parse(JSON.stringify(this.store.currentList.songs));
         this.store.deleteSongIndex = this.store.currentList.songs.length;
-        let deleteSong = newSongs.pop();
+        newSongs.pop();
         this.store.deleteSong();
 
     }

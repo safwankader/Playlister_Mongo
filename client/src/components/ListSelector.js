@@ -19,6 +19,7 @@ const ListSelector = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
+
     let listCard = "";
     if (store) {
         listCard = store.idNamePairs.map((pair) => (

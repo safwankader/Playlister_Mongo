@@ -21,6 +21,8 @@ body {
 }
 
 #root {
+  display: flex;
+  flex-direction: column;
   background-color: var(--swatch-primary);
   font-family: "Lexend Exa";
   position: absolute;
@@ -63,6 +65,9 @@ body {
 
 #playlist-selector,
 #playlist-cards {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
   overflow: scroll;
   grid-column: 1 / 3;
   grid-row: 2 / 3;
@@ -82,7 +87,7 @@ body {
 }
 
 #playlister-statusbar {
-  position: absolute;
+  position: sticky;
   left: 0%;
   top: 90%;
   width: 100%;
@@ -137,6 +142,7 @@ input {
 
 .disabled {
   background-color: lightgray;
+  opacity: 0.25;
 }
 
 .disabled:hover {
@@ -162,10 +168,16 @@ input {
   color: black;
 }
 
-.playlister-button-disabled {
-  opacity: 0.25;
+#undo-button.disabled {
+  pointer-events: none;
   cursor: not-allowed;
 }
+
+#redo-button.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
 
 .modal {

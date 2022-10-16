@@ -99,6 +99,8 @@ function ListCard(props) {
         </div>;
 
     if (editActive) {
+        document.getElementById('undo-button').disabled = true;
+        document.getElementById('redo-button').disabled = true;
         cardElement =
             <input
                 id={"list-" + idNamePair._id}

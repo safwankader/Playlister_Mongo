@@ -45,6 +45,7 @@ export const useGlobalStore = () => {
         deleteSongName : null,
         songEditIndex : null,
 
+
     });
 
     // HERE'S THE DATA STORE'S REDUCER, IT MUST
@@ -65,6 +66,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex: null,
 
+
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -79,6 +81,7 @@ export const useGlobalStore = () => {
                     deleteSongIndex: null,
                     deleteSongName : null,
                     songEditIndex : null,
+
 
                 })
             }
@@ -95,6 +98,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex : null,
 
+
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -109,6 +113,7 @@ export const useGlobalStore = () => {
                     deleteSongIndex : null,
                     deleteSongName : null,
                     songEditIndex : null,
+
 
                 });
             }
@@ -125,6 +130,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex : null,
 
+
                 });
             }
             // EDIT A SONG
@@ -140,6 +146,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex : payload,
 
+
                 });
             }
             // PREPARE A SONG FOR DELETION
@@ -154,6 +161,7 @@ export const useGlobalStore = () => {
                     deleteSongIndex : payload,
                     deleteSongName : store.currentList.songs[payload].title,
                     songEditIndex : null,
+                    
  
 
                 });
@@ -171,6 +179,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex : null,
 
+
                 });
             }
             // START EDITING A LIST NAME
@@ -186,6 +195,7 @@ export const useGlobalStore = () => {
                     deleteSongName : null,
                     songEditIndex : null,
 
+
                 });
             }
             default:
@@ -200,21 +210,25 @@ export const useGlobalStore = () => {
         let transaction = new AddSong_Transaction(store);
         tps.addTransaction(transaction);
         store.refreshCurrentList();
+        store.checkUndoRedo();
     }
 
     store.addMoveSongTransaction = function(start,end) {
         let transaction = new MoveSong_Transaction(store,start,end);
         tps.addTransaction(transaction);
+        store.checkUndoRedo();
     }
 
     store.addDeleteSongTransaction = function() {
         let transaction = new DeleteSong_Transaction(store,store.deleteSongIndex)
         tps.addTransaction(transaction);
+        store.checkUndoRedo();
     }
 
     store.addEditSongTransaction = function (index,title,artist,link) {
         let transaction = new EditSong_Transaction(store,index, title, artist, link);
         tps.addTransaction(transaction);
+        store.checkUndoRedo();
     }
 
 
@@ -365,6 +379,9 @@ export const useGlobalStore = () => {
             payload: {}
         });
         tps.clearAllTransactions();
+        store.checkUndoRedo();
+        document.getElementById("add-song-button").disabled = true;
+        document.getElementById("close-button").disabled = true;
     }
 
 
@@ -405,12 +422,15 @@ export const useGlobalStore = () => {
         store.hideDeleteListModal();
     }
     store.showDeleteListModal = function() {
+        document.getElementById("add-list-button").classList.add("disabled");
         let modal = document.getElementById("delete-modal");
         modal.classList.add("is-visible");
     }
     store.hideDeleteListModal = function() {
+        document.getElementById("add-list-button").classList.remove("disabled");
         let modal = document.getElementById("delete-modal");
         modal.classList.remove("is-visible");
+       
     }
 
 
@@ -487,11 +507,18 @@ export const useGlobalStore = () => {
 
     store.showDeleteSongModal = function() {
         let modal = document.getElementById("delete-song-modal");
+        document.getElementById("add-song-button").disabled = true;
+        document.getElementById("close-button").disabled = true;
+        document.getElementById("undo-button").classList.add("disabled");
+        document.getElementById("redo-button").classList.add("disabled");
         modal.classList.add("is-visible");
     }
     store.hideDeleteSongModal = function() {
         let modal = document.getElementById("delete-song-modal");
+        document.getElementById("add-song-button").disabled = false;
+        document.getElementById("close-button").disabled = false;
         modal.classList.remove("is-visible");
+        store.checkUndoRedo();
     }
 
 
@@ -555,12 +582,19 @@ export const useGlobalStore = () => {
 
     store.showEditSongModal = function() {
         let modal = document.getElementById("edit-song-modal");
+        document.getElementById("add-song-button").disabled = true;
+        document.getElementById("close-button").disabled = true;
+        document.getElementById("undo-button").classList.add("disabled");
+        document.getElementById("redo-button").classList.add("disabled");
         modal.classList.add("is-visible");
     }
 
     store.hideEditSongModal = function() {
         let modal = document.getElementById("edit-song-modal");
+        document.getElementById("add-song-button").disabled = false;
+        document.getElementById("close-button").disabled = false;
         modal.classList.remove("is-visible");
+        store.checkUndoRedo();
     }
 
 
@@ -582,6 +616,9 @@ export const useGlobalStore = () => {
             }
         }
         asyncSetCurrentList(id);
+        document.getElementById("add-song-button").disabled = false;
+        document.getElementById("close-button").disabled = false;
+        store.checkUndoRedo();
     }
 
 
@@ -632,14 +669,15 @@ export const useGlobalStore = () => {
     store.checkUndoRedo = function() {
         let undoButton = document.getElementById('undo-button');
         let redoButton = document.getElementById('redo-button');
-        if(tps.hasTransactionToUndo() && undoButton.disabled)
-            undoButton.disabled = false;
+        console.log(undoButton.classList);
+        if(tps.hasTransactionToUndo() && undoButton.classList.contains("disabled"))
+            undoButton.classList.remove("disabled");
         else if(!tps.hasTransactionToUndo())
-            undoButton.disabled = true;
-        if(tps.hasTransactionToRedo() && redoButton.disabled)
-            redoButton.disabled = false;
+            undoButton.classList.add("disabled");
+        if(tps.hasTransactionToRedo() && redoButton.classList.contains("disabled"))
+            redoButton.classList.remove("disabled");
         else if(!tps.hasTransactionToRedo())
-            redoButton.disabled = true;
+            redoButton.classList.add("disabled");
     }
 
     

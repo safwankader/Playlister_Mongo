@@ -12,12 +12,17 @@ function EditToolbar() {
     const history = useHistory();
 
     let enabledButtonClass = "playlister-button";
+    let disabledButtonClass = "playlister-button disabled";
+
+    let canAdd = store.currentList !== null;
+    let canClose = store.currentList !== null;
 
     function handleAddSong() {
         store.addSongTransaction();
         // store.refreshCurrentList();
     }
     function handleUndo(event) {
+        console.log('trying to undo')
         store.undo();
     }
     function handleRedo(event) {
@@ -28,7 +33,7 @@ function EditToolbar() {
         store.closeCurrentList();
     }
     let editStatus = false;
-    if (store.isListNameEditActive) {
+    if (store.listNameActive) {
         editStatus = true;
     }
     return (
@@ -39,19 +44,20 @@ function EditToolbar() {
                 value="+"
                 className={enabledButtonClass}
                 onClick={handleAddSong}
+                disabled={!canAdd}
             />
             <input
                 type="button"
                 id='undo-button'
                 value="⟲"
-                className={enabledButtonClass}
+                className={disabledButtonClass}
                 onClick={handleUndo}
             />
             <input
                 type="button"
                 id='redo-button'
                 value="⟳"
-                className={enabledButtonClass}
+                className={disabledButtonClass}
                 onClick={handleRedo}
             />
             <input
@@ -60,6 +66,7 @@ function EditToolbar() {
                 value="&#x2715;"
                 className={enabledButtonClass}
                 onClick={handleClose}
+                disabled={!canClose}
             />
         </span>);
 }

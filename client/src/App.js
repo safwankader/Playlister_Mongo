@@ -8,6 +8,8 @@ import { Banner, ListSelector, PlaylistCards, Statusbar } from './components'
     @author McKilla Gorilla
 */
 const App = () => {
+    
+    
     return (
         <Router>
             <Banner />
