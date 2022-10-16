@@ -70,24 +70,15 @@ body {
   background-color: var(--swatch-primary);
 }
 
-.playlister-button,
-.playlister-button-disabled {
-  font-size: 36pt;
-  border-width: 0px;
-  float: left;
-  color: black;
-  cursor: pointer;
-  opacity: 100%;
+#playlist-selector-heading {
+  margin: 25px;
+  font-size: 30px;
 }
 
-.playlister-button:hover {
-  cursor: pointer;
-  color: black;
-}
-
-.playlister-button-disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
+#add-list-button {
+  margin-right: 25px;
+  position: relative;
+  bottom: 10pt;
 }
 
 #playlister-statusbar {
@@ -101,10 +92,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 36pt;
-}
-
-#add-list-button {
-  float: left;
 }
 
 .list-card,
@@ -156,6 +143,29 @@ input {
   color: var(--swatch-neutral);
 }
 
+.playlister-button,
+.playlister-button-disabled {
+  font-size: 36pt;
+  border-width: 0px;
+  float: left;
+  color: black;
+  cursor: pointer;
+  height: 65px;
+  border-radius: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 3px;
+}
+
+.playlister-button:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.playlister-button-disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
 
 .modal {

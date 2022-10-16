@@ -17,10 +17,10 @@ function EditToolbar() {
         store.addSongTransaction();
         // store.refreshCurrentList();
     }
-    function handleUndo() {
+    function handleUndo(event) {
         store.undo();
     }
-    function handleRedo() {
+    function handleRedo(event) {
         store.redo();
     }
     function handleClose() {
@@ -36,7 +36,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='add-song-button'
-                disabled={editStatus}
                 value="+"
                 className={enabledButtonClass}
                 onClick={handleAddSong}
@@ -44,7 +43,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='undo-button'
-                disabled={editStatus}
                 value="⟲"
                 className={enabledButtonClass}
                 onClick={handleUndo}
@@ -52,7 +50,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='redo-button'
-                disabled={editStatus}
                 value="⟳"
                 className={enabledButtonClass}
                 onClick={handleRedo}
@@ -60,7 +57,6 @@ function EditToolbar() {
             <input
                 type="button"
                 id='close-button'
-                disabled={editStatus}
                 value="&#x2715;"
                 className={enabledButtonClass}
                 onClick={handleClose}

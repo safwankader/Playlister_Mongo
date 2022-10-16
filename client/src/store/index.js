@@ -459,6 +459,7 @@ export const useGlobalStore = () => {
     }
 
     store.deleteSong = function() {
+        console.log(store.deleteSongIndex);
         async function processDeleteSong(){
             let response = await api.getPlaylistById(store.currentList._id)
             if(response.data.success){
@@ -592,9 +593,11 @@ export const useGlobalStore = () => {
     }
     store.undo = function () {
         tps.undoTransaction();
+        store.checkUndoRedo();
     }
     store.redo = function () {
         tps.doTransaction();
+        store.checkUndoRedo();
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
@@ -624,6 +627,19 @@ export const useGlobalStore = () => {
             }
         }
         asyncRefreshCurrentList();
+    }
+
+    store.checkUndoRedo = function() {
+        let undoButton = document.getElementById('undo-button');
+        let redoButton = document.getElementById('redo-button');
+        if(tps.hasTransactionToUndo() && undoButton.disabled)
+            undoButton.disabled = false;
+        else if(!tps.hasTransactionToUndo())
+            undoButton.disabled = true;
+        if(tps.hasTransactionToRedo() && redoButton.disabled)
+            redoButton.disabled = false;
+        else if(!tps.hasTransactionToRedo())
+            redoButton.disabled = true;
     }
 
     
