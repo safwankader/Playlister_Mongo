@@ -199,6 +199,7 @@ export const useGlobalStore = () => {
     store.addSongTransaction = function() {
         let transaction = new AddSong_Transaction(store);
         tps.addTransaction(transaction);
+        store.refreshCurrentList();
     }
 
     store.addMoveSongTransaction = function(start,end) {
@@ -310,7 +311,8 @@ export const useGlobalStore = () => {
                         type: GlobalStoreActionType.CREATE_NEW_LIST,
                         payload: newPlaylist
                     });
-                    store.history.push("/playlist" + newPlaylist._id);
+                    store.setCurrentList(newPlaylist._id)
+                    // store.history.push("/playlist" + newPlaylist._id);
                     // store.setNewList(newPlaylist._id);
                 }
             }
@@ -544,7 +546,6 @@ export const useGlobalStore = () => {
 
     store.setEditInnerText = function(index) {
         let curSong = store.currentList.songs[index];
-        console.log(curSong.title);
         document.getElementById('edit-song-modal-title-textfield').value = curSong.title;
         document.getElementById('edit-song-modal-artist-textfield').value = curSong.artist;
         document.getElementById('edit-song-modal-youTubeId-textfield').value = curSong.youTubeId;

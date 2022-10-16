@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import SongCard from './SongCard.js'
 import { GlobalStoreContext } from '../store'
@@ -13,6 +13,30 @@ import EditSongModal from './EditSongModal'
 function PlaylistCards() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
+    
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            document.removeEventListener('keydown',handleKeyPress);
+        }
+
+    },[store]);
+
+    const handleKeyPress = useCallback((event) => {
+        let undoButton = document.getElementById('undo-button');
+        let redoButton = document.getElementById('redo-button')
+            if ( event.ctrlKey && (event.key === 'z' || event.key === 'Z')) {
+                undoButton.click(); 
+              }
+            else if ( event.ctrlKey && (event.key === 'y' || event.key === 'Y')) {
+                redoButton.click();
+              }
+    }, []);
+
+    
+
     if(store.currentList === null){
         store.history.push("/");
         return null;
