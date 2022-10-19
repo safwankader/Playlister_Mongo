@@ -227,6 +227,8 @@ input {
 
 .modal-button {
   position: relative;
+  font-size: 20pt;
+  margin: 5px;
 }
 
 .modal.is-visible {
