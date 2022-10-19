@@ -42,17 +42,20 @@ function ListCard(props) {
     function toggleEdit() {
         let newActive = !editActive;
         if (newActive) {
+            document.getElementById("add-list-button").classList.add("disabled");
             store.setIsListNameEditActive();
         }
+        else{
+            document.getElementById("add-list-button").classList.remove("disabled");
+        }
+
         setEditActive(newActive);
     }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
-            if(text){
-                store.changeListName(id, text);
-            }
+            if(text) store.changeListName(id, text);
             toggleEdit();
         }
     }
@@ -86,7 +89,7 @@ function ListCard(props) {
                 id={"delete-list-" + idNamePair._id}
                 className="list-card-button"
                 onClick={handleDeleteList}
-                value={"\u2715"}
+                value={"🗑"}
             />
             <input
                 disabled={cardStatus}
@@ -99,8 +102,6 @@ function ListCard(props) {
         </div>;
 
     if (editActive) {
-        document.getElementById('undo-button').disabled = true;
-        document.getElementById('redo-button').disabled = true;
         cardElement =
             <input
                 id={"list-" + idNamePair._id}

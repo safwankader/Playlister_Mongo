@@ -132,6 +132,7 @@ export default class jsTPS {
      * @param {jsTPS_Transaction} transaction Transaction to add to the stack and do.
      */
     addTransaction(transaction) {
+        console.log(document.getElementById('undo-button').disabled);
         // ARE WE BRANCHING?
         if ((this.mostRecentTransaction < 0) 
             || (this.mostRecentTransaction < (this.transactions.length - 1))) {
@@ -159,6 +160,7 @@ export default class jsTPS {
      * a transaction (which also does it), or redoing a transaction.
      */
     doTransaction() {
+        console.log(document.getElementById('undo-button').disabled);
         if (this.hasTransactionToRedo()) {
             this.performingDo = true;
             let transaction = this.transactions[this.mostRecentTransaction+1];
@@ -173,6 +175,7 @@ export default class jsTPS {
      * TPS stack and undoes it, moving the TPS counter accordingly.
      */
     undoTransaction() {
+        console.log(document.getElementById('undo-button').disabled);
         if (this.hasTransactionToUndo()) {
             this.performingUndo = true;
             let transaction = this.transactions[this.mostRecentTransaction];
@@ -195,6 +198,9 @@ export default class jsTPS {
         // TOP OF THE TPS STACK TOO
         this.mostRecentTransaction = -1;      
         this.numTransactions = 0; 
+
+        document.getElementById("undo-button").classList.add("disabled");
+        document.getElementById("redo-button").classList.add("disabled");
     }
 
     /**

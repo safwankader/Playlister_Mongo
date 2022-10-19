@@ -16,7 +16,7 @@ function DeleteModal() {
             id="delete-modal"
             data-animation="slideInOutLeft">
             <div className="modal-dialog">
-                <header className="dialog-header">
+                <header className="dialog-header modal-north">
                     Delete the {name} Playlist?
                 </header>
                 <div id="confirm-cancel-container">

@@ -26,7 +26,7 @@ function EditSongModal () {
         id="edit-song-modal"
         data-animation="slideInOutLeft">
         <div className="modal-dialog">
-            <header className="dialog-header">
+            <header className="dialog-header modal-north">
                 Edit Song
             </header>
                 <label class="modal-label" for="edit-song-modal-title-textfield" id="title-prompt"><b>Title:</b></label>

@@ -142,7 +142,9 @@ input {
 
 .disabled {
   background-color: lightgray;
-  opacity: 0.25;
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .disabled:hover {
@@ -166,16 +168,6 @@ input {
 .playlister-button:hover {
   cursor: pointer;
   color: black;
-}
-
-#undo-button.disabled {
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-#redo-button.disabled {
-  pointer-events: none;
-  cursor: not-allowed;
 }
 
 /* THIS STYLE SHEET MANAGES STYLE FOR OUR MODAL, i.e. DIALOG BOX */
@@ -206,6 +198,21 @@ input {
   margin: 10px;
   padding: 20px 10px;
   line-height: 28px;
+}
+
+.modal-north {
+  font-size: 26pt;
+  font-weight: bold;
+  background-color: #669966;
+  color: white;
+}
+
+.modal-center {
+  display: grid;
+  grid-template-columns: 30% 65%;
+  grid-template-rows: 33% 33% 33%;
+  gap: 10px 20px;
+  font-size: 26pt;
 }
 
 .modal-label {

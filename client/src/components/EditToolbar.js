@@ -17,6 +17,13 @@ function EditToolbar() {
     let canAdd = store.currentList !== null;
     let canClose = store.currentList !== null;
 
+    if(store.currentList === null){
+        if(document.getElementById("undo-button") && document.getElementById("redo-button")){
+        document.getElementById("undo-button").classList.add("disabled");
+        document.getElementById("redo-button").classList.add("disabled");
+        }
+    }
+
     function handleAddSong() {
         store.addSongTransaction();
         // store.refreshCurrentList();

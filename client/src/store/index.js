@@ -370,6 +370,7 @@ export const useGlobalStore = () => {
             }
         }
         asyncChangeListName(id);
+
     }
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
@@ -600,9 +601,11 @@ export const useGlobalStore = () => {
 
 
     store.setCurrentList = function (id) {
+        
         async function asyncSetCurrentList(id) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
+                tps.clearAllTransactions();
                 let playlist = response.data.playlist;
 
                 if (response.data.success) {
@@ -618,7 +621,6 @@ export const useGlobalStore = () => {
         asyncSetCurrentList(id);
         document.getElementById("add-song-button").disabled = false;
         document.getElementById("close-button").disabled = false;
-        store.checkUndoRedo();
     }
 
 
@@ -646,6 +648,7 @@ export const useGlobalStore = () => {
     }
 
     store.setIsListNameEditActive = function() {
+        tps.clearAllTransactions();
         store.setlistNameActive();
     }
 

@@ -16,7 +16,7 @@ function DeleteSongModal() {
             id="delete-song-modal"
             data-animation="slideInOutLeft">
             <div className="modal-dialog">
-                <header className="dialog-header">
+                <header className="dialog-header modal-north">
                     Delete {name} from the Playlist?
                 </header>
                 <div id="confirm-cancel-container">
